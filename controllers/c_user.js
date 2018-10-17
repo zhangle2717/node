@@ -1,3 +1,5 @@
+//控制器
+
 //这个只要结果
 const m_user = require('../moudles/m_user');
 //用户模块
@@ -10,7 +12,7 @@ const showSignin = (req,res)=>{
 }
 const handleSignin = (req,res)=>{
    const body = req.body;
-   console.log(body);
+//    console.log(body);
    m_user.checkEmail(body.email,function(err,data){
         if(err){
            return res.send({
@@ -34,6 +36,10 @@ const handleSignin = (req,res)=>{
 
             })
         }
+        req.session.user=data[0];
+        
+        // res.render('index.html',{user:req.session.user});
+
         res.send({
                 code:4,
                 message:'登录成功',
@@ -77,9 +83,15 @@ const handleSignin = (req,res)=>{
     // })
    
    
-}
+};
 
+const clearSj=(req,res)=>{
+    //清除session，并跳转页面
+    delete req.session.user;
+    res.redirect('/signin');
+}
 module.exports={
     showSignin,
     handleSignin,
+    clearSj,
 };

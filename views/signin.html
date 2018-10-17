@@ -51,7 +51,11 @@
                 type:'post',
                 data:data,
                 success:function(info){
-                    console.log(info);
+                    if(info.code===4){
+                        window.location.href='/'
+                    }else{
+                        alert(info.message);
+                    }
                     
                     
                 }
